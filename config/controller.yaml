@@ -4,17 +4,12 @@ controller_manager:
     use_sim_time: true
 
     arm_cont:
-      type: velocity_controllers/JointGroupVelocityController
+      type: effort_controllers/JointGroupEffortController
 
-    pendulum_broad:
+    joint_broad:
       type: joint_state_broadcaster/JointStateBroadcaster
-
+      
 arm_cont:
   ros__parameters:
     joints:
       - arm_joint
-
-pendulum_broad:
-  ros__parameters:
-    joints:
-      - pendulum_joint

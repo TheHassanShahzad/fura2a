@@ -6,7 +6,7 @@
             <plugin>gazebo_ros2_control/GazeboSystem</plugin>
         </hardware>
         <joint name="arm_joint">
-            <command_interface name="velocity"/>
+            <command_interface name="effort"/>
             
             <state_interface name="position"/>
             <state_interface name="velocity"/>

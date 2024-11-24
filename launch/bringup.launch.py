@@ -56,10 +56,10 @@ def generate_launch_description():
         arguments=["arm_cont"],
     )
 
-    pendulum_broad_spawner = Node(
+    joint_broad_spawner = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=["pendulum_broad"],
+        arguments=["joint_broad"],
     )
 
 
@@ -77,6 +77,6 @@ def generate_launch_description():
         gazebo,
         spawn_entity,
         arm_cont_spawner,
-        pendulum_broad_spawner,
+        joint_broad_spawner,
         rviz2
     ])
