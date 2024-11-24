@@ -17,7 +17,7 @@
     <geometry>
       <mesh filename="file://$(find fura2a)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
     </geometry>
-    <material name="silver"/>
+    <material name="CustomRed"/>
   </visual>
   <collision>
     <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -38,7 +38,7 @@
     <geometry>
       <mesh filename="file://$(find fura2a)/meshes/column.stl" scale="0.001 0.001 0.001"/>
     </geometry>
-    <material name="silver"/>
+    <material name="CustomYellow"/>
   </visual>
   <collision>
     <origin xyz="-0.0 -0.0 -0.02" rpy="0 0 0"/>
@@ -59,7 +59,7 @@
     <geometry>
       <mesh filename="file://$(find fura2a)/meshes/arm.stl" scale="0.001 0.001 0.001"/>
     </geometry>
-    <material name="silver"/>
+    <material name="CustomGreen"/>
   </visual>
   <collision>
     <origin xyz="-0.0 -0.0 -0.145" rpy="0 0 0"/>
@@ -80,7 +80,7 @@
     <geometry>
       <mesh filename="file://$(find fura2a)/meshes/pendulum.stl" scale="0.001 0.001 0.001"/>
     </geometry>
-    <material name="silver"/>
+    <material name="CUstomBlue"/>
   </visual>
   <collision>
     <origin xyz="-0.075 -0.0 -0.1575" rpy="0 0 0"/>

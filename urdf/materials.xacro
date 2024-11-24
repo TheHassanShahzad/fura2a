@@ -1,8 +1,39 @@
-<?xml version="1.0" ?>
-<robot name="fura2a" xmlns:xacro="http://www.ros.org/wiki/xacro" >
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="materials">
 
-<material name="silver">
-  <color rgba="0.700 0.700 0.700 1.000"/>
-</material>
+  <!-- Define custom materials -->
+
+  <!-- Silver Material -->
+  <material name="Silver">
+    <color rgba="0.75 0.75 0.75 1.0"/>
+  </material>
+
+  <!-- Custom Red Material -->
+  <material name="CustomRed">
+    <color rgba="1 0 0 1"/>
+  </material>
+
+  <!-- Custom Green Material -->
+  <material name="CustomGreen">
+    <color rgba="0 1 0 1"/>
+  </material>
+
+  <!-- Custom Blue Material -->
+  <material name="CustomBlue">
+    <color rgba="0 0 1 1"/>
+  </material>
+
+  <!-- Custom Yellow Material -->
+  <material name="CustomYellow">
+    <color rgba="1 1 0 1"/>
+  </material>
+
+  <!-- Custom Purple Material -->
+  <material name="CustomPurple">
+    <color rgba="0.5 0 0.5 1"/>
+  </material>
+
+  <!-- Add more materials as needed -->
 
 </robot>
+
