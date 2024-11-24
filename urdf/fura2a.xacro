@@ -1,0 +1,115 @@
+<?xml version="1.0" ?>
+<robot name="fura2a" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find fura2a)/urdf/materials.xacro" />
+<xacro:include filename="$(find fura2a)/urdf/fura2a.gazebo" />
+<xacro:include filename="$(find fura2a)/urdf/ros2_control.xacro" />
+
+
+<link name="base_link">
+  <inertial>
+    <origin xyz="-1.4655194516233777e-17 0.0 0.009896382619700488" rpy="0 0 0"/>
+    <mass value="4.871674272906388"/>
+    <inertia ixx="0.012198" iyy="0.012198" izz="0.024075" ixy="-0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find fura2a)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find fura2a)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="column">
+  <inertial>
+    <origin xyz="1.0658141036401502e-16 0.0 0.062495742145380256" rpy="0 0 0"/>
+    <mass value="7.706192602274715"/>
+    <inertia ixx="0.014849" iyy="0.014849" izz="0.009632" ixy="0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.0 -0.0 -0.02" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find fura2a)/meshes/column.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.0 -0.0 -0.02" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find fura2a)/meshes/column.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="arm">
+  <inertial>
+    <origin xyz="0.007967562168493848 3.0890324677637924e-17 0.012500000000000011" rpy="0 0 0"/>
+    <mass value="1.786614971490255"/>
+    <inertia ixx="0.001119" iyy="0.001785" izz="0.002717" ixy="-0.0" iyz="0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.0 -0.0 -0.145" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find fura2a)/meshes/arm.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.0 -0.0 -0.145" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find fura2a)/meshes/arm.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="pendulum">
+  <inertial>
+    <origin xyz="0.0049999999999999906 1.2138781501420367e-17 0.059999999999999915" rpy="0 0 0"/>
+    <mass value="0.08939794594871456"/>
+    <inertia ixx="0.000157" iyy="0.000157" izz="1e-06" ixy="0.0" iyz="-0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.075 -0.0 -0.1575" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find fura2a)/meshes/pendulum.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.075 -0.0 -0.1575" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find fura2a)/meshes/pendulum.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+
+
+<joint name="base_column_joint" type="fixed">
+  <origin xyz="0.0 0.0 0.02" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="column"/>
+</joint>
+
+<joint name="arm_joint" type="continuous">
+  <origin xyz="0.0 0.0 0.125" rpy="0 0 0"/>
+  <parent link="column"/>
+  <child link="arm"/>
+  <axis xyz="0.0 0.0 1.0"/>
+</joint>
+
+<joint name="pendulum_joint" type="continuous">
+  <origin xyz="0.075 0.0 0.0125" rpy="0 0 0"/>
+  <parent link="arm"/>
+  <child link="pendulum"/>
+  <axis xyz="1.0 0.0 0.0"/>
+</joint>
+
+</robot>

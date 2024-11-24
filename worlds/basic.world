@@ -1,0 +1,399 @@
+<sdf version='1.7'>
+  <world name='default'>
+    <light name='sun' type='directional'>
+      <cast_shadows>1</cast_shadows>
+      <pose>0 0 10 0 -0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+      <spot>
+        <inner_angle>0</inner_angle>
+        <outer_angle>0</outer_angle>
+        <falloff>0</falloff>
+      </spot>
+    </light>
+    <model name='ground_plane'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>100</mu>
+                <mu2>50</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <cast_shadows>0</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grey</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
+    <physics type='ode'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>1</shadows>
+    </scene>
+    <audio>
+      <device>default</device>
+    </audio>
+    <wind/>
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <latitude_deg>0</latitude_deg>
+      <longitude_deg>0</longitude_deg>
+      <elevation>0</elevation>
+      <heading_deg>0</heading_deg>
+    </spherical_coordinates>
+    <model name='fura2a'>
+      <link name='base_link'>
+        <inertial>
+          <pose>0 0 0.054376 0 -0 0</pose>
+          <mass>12.5779</mass>
+          <inertia>
+            <ixx>0.0427787</ixx>
+            <ixy>0</ixy>
+            <ixz>-2.62711e-17</ixz>
+            <iyy>0.0427787</iyy>
+            <iyz>0</iyz>
+            <izz>0.033707</izz>
+          </inertia>
+        </inertial>
+        <collision name='base_link_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.001 0.001 0.001</scale>
+              <uri>file:///home/the-hassan-shahzad/ros2_ws/install/fura2a/share/fura2a/meshes/base_link.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.95</mu>
+                <mu2>0.95</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <collision name='base_link_fixed_joint_lump__column_collision_1'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.001 0.001 0.001</scale>
+              <uri>file:///home/the-hassan-shahzad/ros2_ws/install/fura2a/share/fura2a/meshes/column.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.1</mu>
+                <mu2>0.1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='base_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.001 0.001 0.001</scale>
+              <uri>file:///home/the-hassan-shahzad/ros2_ws/install/fura2a/share/fura2a/meshes/base_link.stl</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Silver</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <visual name='base_link_fixed_joint_lump__column_visual_1'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.001 0.001 0.001</scale>
+              <uri>file:///home/the-hassan-shahzad/ros2_ws/install/fura2a/share/fura2a/meshes/column.stl</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Silver</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <self_collide>1</self_collide>
+        <gravity>1</gravity>
+        <self_collide>1</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='arm_joint' type='revolute'>
+        <pose relative_to='base_link'>0 0 0.145 0 -0 0</pose>
+        <parent>base_link</parent>
+        <child>arm</child>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='arm'>
+        <pose relative_to='arm_joint'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0.007968 0 0.0125 0 -0 0</pose>
+          <mass>1.78661</mass>
+          <inertia>
+            <ixx>0.001119</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.001785</iyy>
+            <iyz>0</iyz>
+            <izz>0.002717</izz>
+          </inertia>
+        </inertial>
+        <collision name='arm_collision'>
+          <pose>0 0 -0.145 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.001 0.001 0.001</scale>
+              <uri>file:///home/the-hassan-shahzad/ros2_ws/install/fura2a/share/fura2a/meshes/arm.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.1</mu>
+                <mu2>0.1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='arm_visual'>
+          <pose>0 0 -0.145 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.001 0.001 0.001</scale>
+              <uri>file:///home/the-hassan-shahzad/ros2_ws/install/fura2a/share/fura2a/meshes/arm.stl</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Silver</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <self_collide>1</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='pendulum_joint' type='revolute'>
+        <pose relative_to='arm'>0.075 0 0.0125 0 -0 0</pose>
+        <parent>arm</parent>
+        <child>pendulum</child>
+        <axis>
+          <xyz>1 0 0</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='pendulum'>
+        <pose relative_to='pendulum_joint'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0.005 0 0.06 0 -0 0</pose>
+          <mass>0.0893979</mass>
+          <inertia>
+            <ixx>0.000157</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.000157</iyy>
+            <iyz>0</iyz>
+            <izz>1e-06</izz>
+          </inertia>
+        </inertial>
+        <collision name='pendulum_collision'>
+          <pose>-0.075 0 -0.1575 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.001 0.001 0.001</scale>
+              <uri>file:///home/the-hassan-shahzad/ros2_ws/install/fura2a/share/fura2a/meshes/pendulum.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.1</mu>
+                <mu2>0.1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='pendulum_visual'>
+          <pose>-0.075 0 -0.1575 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.001 0.001 0.001</scale>
+              <uri>file:///home/the-hassan-shahzad/ros2_ws/install/fura2a/share/fura2a/meshes/pendulum.stl</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Silver</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <self_collide>1</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <plugin name='gazebo_ros2_control' filename='libgazebo_ros2_control.so'>
+        <parameters>/home/the-hassan-shahzad/ros2_ws/install/fura2a/share/fura2a/config/controller.yaml</parameters>
+      </plugin>
+      <static>0</static>
+      <plugin name='pendulum_disturbance' filename='libgazebo_ros_joint_effort.so'>
+        <joint_name>pendulum_joint</joint_name>
+        <topic_name>/apply_joint_effort</topic_name>
+      </plugin>
+      <pose>0 0 0 0 -0 0</pose>
+    </model>
+    <state world_name='default'>
+      <sim_time>46 998000000</sim_time>
+      <real_time>47 170216038</real_time>
+      <wall_time>1732416909 907511894</wall_time>
+      <iterations>46998</iterations>
+      <model name='fura2a'>
+        <pose>-2e-06 1e-06 -1e-06 1.8e-05 6e-06 3.7e-05</pose>
+        <scale>1 1 1</scale>
+        <link name='arm'>
+          <pose>-1e-06 -1e-06 0.144999 1.8e-05 6e-06 9.6e-05</pose>
+          <velocity>-0.000913 -0.004841 0.000103 0.033368 -0.006286 0.043385</velocity>
+          <acceleration>-1.98028 -10.1692 0.305186 -2.37398 0.004236 -0.598381</acceleration>
+          <wrench>-3.53798 -18.1684 0.545249 0 -0 0</wrench>
+        </link>
+        <link name='base_link'>
+          <pose>-2e-06 1e-06 -1e-06 1.8e-05 6e-06 3.7e-05</pose>
+          <velocity>-0 -0 0.000102 0.033374 -0.00628 -0</velocity>
+          <acceleration>-0.682982 -3.62959 0.203955 -2.36667 0.006054 -0.001106</acceleration>
+          <wrench>-8.59048 -45.6526 2.56532 0 -0 0</wrench>
+        </link>
+        <link name='pendulum'>
+          <pose>0.074999 6e-06 0.157499 -1.56781 6e-06 9.6e-05</pose>
+          <velocity>-0.000996 -0.002026 0.000577 0.15067 -0.006231 0.043375</velocity>
+          <acceleration>-7.20386 -3.55014 -6.1946 -0.806007 -0.240827 -2.14649</acceleration>
+          <wrench>-0.64401 -0.317375 -0.553784 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ground_plane'>
+        <pose>0 0 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>0 0 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <light name='sun'>
+        <pose>0 0 10 0 -0 0</pose>
+      </light>
+    </state>
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose>0.420994 -0.385424 0.261088 0 0.275643 2.35619</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+  </world>
+</sdf>
