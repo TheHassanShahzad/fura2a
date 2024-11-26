@@ -29,37 +29,58 @@ class JointStateProcessor(Node):
             10)
         
         self.mp = 0.0893979 
+        self.ma = 4.8716742
         self.lp = 0.12 
-        self.g = 9.81 
-        # self.ia = 0.002830449 
-        # self.ip = 0.000358709 
-        self.ia = 1
-        self.ip = 1 
+        self.g = 9.81
+        self.ia = 0.002830449 
+        self.ip = 0.000358709 
 
         self.Ts = 0.02 #will set properly later
-        self.N = 10
+        self.N = 20
+
+        alpha = self.ip + self.mp * self.lp**2
+        beta = self.lp * self.mp * self.lp
+        delta = self.ia + self.mp * self.lp**2
+
+        # Denominator for A and B matrices
+        denominator = alpha * delta - beta**2
 
         self.Ac = np.array([
             [0, 1, 0, 0],
-            [0, 0, (-self.mp * self.g * self.lp / self.ia), 0],
+            [0, 0, beta * self.g * self.lp * self.mp / denominator, 0],
             [0, 0, 0, 1],
-            [0, 0, ((self.ia + self.mp * (self.lp ** 2)) * self.g / (self.ia * self.ip)), 0]
+            [0, 0, -delta * self.g * self.lp * self.mp / denominator, 0]
         ])
 
+        # B matrix
         self.Bc = np.array([
             [0],
-            [1 / self.ia],
+            [1 / denominator],
             [0],
-            [-self.lp / (self.ia * self.ip)]
+            [-beta / denominator]
         ])
+
+        # self.Ac = np.array([
+        #     [0, 1, 0, 0],
+        #     [0, 0, (-self.mp * self.g * self.lp / self.ia), 0],
+        #     [0, 0, 0, 1],
+        #     [0, 0, ((self.ia + self.mp * (self.lp ** 2)) * self.g / (self.ia * self.ip)), 0]
+        # ])
+
+        # self.Bc = np.array([
+        #     [0],
+        #     [1 / self.ia],
+        #     [0],
+        #     [-self.lp / (self.ia * self.ip)]
+        # ])
 
 
         self.Cc = np.array([[1,0,0,0], [0,0,1,0]])
         self.Dc = 0
         self.Ad, self.Bd, self.Cd, self.Dd, _ = self.discretize(self.Ac, self.Bc, self.Cc, self.Dc, self.Ts)
 
-        self.Q = np.array([[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]])
-        self.R = np.eye(1)
+        self.Q = np.array([[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]])*10
+        self.R = np.eye(1)*10
 
         self.x_constraints = [
             [-np.inf, -np.inf, -np.inf, -np.inf],  # Loosen state lower bounds
@@ -143,6 +164,8 @@ class JointStateProcessor(Node):
 
         # Optimal control inputs
         U_opt = U.value
+        # print(U_opt)
+        # print(" ")
 
         return U_opt
     
@@ -165,16 +188,15 @@ class JointStateProcessor(Node):
 
 
             # Save a value to publish (e.g., the integer part of arm_position)
-            self.effort_command = float(self.optimize(self.N, self.X, self.X_ref, self.Ad, self.Bd, self.Q, self.R, self.x_constraints, self.u_constraints)[0][0])
-            self.get_logger().info(f'effort command to be published: {self.effort_command}')
+            self.effort_command = 10*float(self.optimize(self.N, self.X, self.X_ref, self.Ad, self.Bd, self.Q, self.R, self.x_constraints, self.u_constraints)[0][0])
+            # self.get_logger().info(f'effort command to be published: {self.effort_command}')
             # Prepare the message to publish
             msg_to_publish = Float64MultiArray()
-            # print(type(self.effort_command))
             msg_to_publish.data = [self.effort_command]
             
             # Publish the message
             self.publisher_.publish(msg_to_publish)
-            # self.get_logger().info(f'Published value: {self.effort_command}')
+            self.get_logger().info(f'Published value: {self.effort_command}')
             
         except ValueError:
             # Handle the case where the joint name is not found
