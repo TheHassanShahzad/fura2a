@@ -1,10 +1,13 @@
 <?xml version="1.0" ?>
 <robot name="fura2a" xmlns:xacro="http://www.ros.org/wiki/xacro" >
 
-<xacro:property name="body_color" value="Gazebo/Silver" />
+<xacro:property name="base_colour" value="Gazebo/Silver" />
+<xacro:property name="column_colour" value="Gazebo/CustomRed" />
+<xacro:property name="arm_colour" value="Gazebo/CustomPurple" />
+<xacro:property name="pendulum_colour" value="Gazebo/CustomBlue" />
 
 <gazebo reference="base_link">
-  <material>${body_color}</material>
+  <material>${base_colour}</material>
   <mu1>0.95</mu1>
   <mu2>0.95</mu2>
   <self_collide>true</self_collide>
@@ -12,21 +15,21 @@
 </gazebo>
 
 <gazebo reference="column">
-  <material>${body_color}</material>
+  <material>${column_colour}</material>
   <mu1>0.1</mu1>
   <mu2>0.1</mu2>
   <self_collide>true</self_collide>
 </gazebo>
 
 <gazebo reference="arm">
-  <material>${body_color}</material>
+  <material>${arm_colour}</material>
   <mu1>0.1</mu1>
   <mu2>0.1</mu2>
   <self_collide>true</self_collide>
 </gazebo>
 
 <gazebo reference="pendulum">
-  <material>${body_color}</material>
+  <material>${pendulum_colour}</material>
   <mu1>0.1</mu1>
   <mu2>0.1</mu2>
   <self_collide>true</self_collide>

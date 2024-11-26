@@ -91,7 +91,6 @@
 </link>
 
 
-
 <joint name="base_column_joint" type="fixed">
   <origin xyz="0.0 0.0 0.02" rpy="0 0 0"/>
   <parent link="base_link"/>
