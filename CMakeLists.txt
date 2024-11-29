@@ -48,7 +48,7 @@ install(DIRECTORY worlds
 
 install(PROGRAMS
   fura2a/simple_publisher.py  # Add all Python scripts explicitly
-  fura2a/mpc.py
+  fura2a/lqr.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

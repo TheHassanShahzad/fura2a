@@ -19,7 +19,7 @@ setup(
     entry_points={
         'console_scripts': [
             'simple_publisher = fura2a.simple_publisher:main',
-            'mpc = fura2a.mpc:main',
+            'lqr = fura2a.lqr:main',
         ],
     },
 )

@@ -79,5 +79,5 @@ def generate_launch_description():
         spawn_entity,
         arm_cont_spawner,
         joint_broad_spawner,
-        # rviz2
+        rviz2
     ])

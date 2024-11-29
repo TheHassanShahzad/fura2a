@@ -71,7 +71,7 @@
 
 <link name="pendulum">
   <inertial>
-    <origin xyz="0.0049999999999999906 1.2138781501420367e-17 0.059999999999999915" rpy="0 0 0"/>
+    <origin xyz="0.005 1.2138781501420367e-17 0.06" rpy="0 0 0"/>
     <mass value="0.08939794594871456"/>
     <inertia ixx="0.000157" iyy="0.000157" izz="1e-06" ixy="0.0" iyz="-0.0" ixz="-0.0"/>
   </inertial>
@@ -105,7 +105,7 @@
 </joint>
 
 <joint name="pendulum_joint" type="continuous">
-  <origin xyz="0.075 0.0 0.0125" rpy="0 0 0"/>
+  <origin xyz="0.075 0.0 0.0125" rpy="-3.1415926 0 0"/>
   <parent link="arm"/>
   <child link="pendulum"/>
   <axis xyz="1.0 0.0 0.0"/>

@@ -29,11 +29,11 @@ class JointStateProcessor(Node):
             10)
         
         self.mp = 0.0893979 
-        self.ma = 4.8716742
+        self.ma = 1.7866149
         self.lp = 0.12 
         self.g = 9.81
         self.ia = 0.002830449 
-        self.ip = 0.000358709 
+        self.ip = 0.000358709
 
         self.Ts = 0.02 #will set properly later
         self.N = 20
@@ -164,8 +164,8 @@ class JointStateProcessor(Node):
 
         # Optimal control inputs
         U_opt = U.value
-        # print(U_opt)
-        # print(" ")
+        print(U_opt)
+        print(" ")
 
         return U_opt
     
@@ -188,7 +188,7 @@ class JointStateProcessor(Node):
 
 
             # Save a value to publish (e.g., the integer part of arm_position)
-            self.effort_command = 10*float(self.optimize(self.N, self.X, self.X_ref, self.Ad, self.Bd, self.Q, self.R, self.x_constraints, self.u_constraints)[0][0])
+            self.effort_command = float(self.optimize(self.N, self.X, self.X_ref, self.Ad, self.Bd, self.Q, self.R, self.x_constraints, self.u_constraints)[0][0])
             # self.get_logger().info(f'effort command to be published: {self.effort_command}')
             # Prepare the message to publish
             msg_to_publish = Float64MultiArray()
