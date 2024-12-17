@@ -1,6 +1,7 @@
 controller_manager:
   ros__parameters:
     update_rate: 400
+    # use_sim_time: false
     use_sim_time: true
 
     arm_cont:

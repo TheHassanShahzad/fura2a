@@ -178,7 +178,7 @@
           </geometry>
           <material>
             <script>
-              <name>Gazebo/Silver</name>
+              <name>Gazebo/CustomRed</name>
               <uri>file://media/materials/scripts/gazebo.material</uri>
             </script>
           </material>
@@ -254,7 +254,7 @@
           </geometry>
           <material>
             <script>
-              <name>Gazebo/Silver</name>
+              <name>Gazebo/CustomPurple</name>
               <uri>file://media/materials/scripts/gazebo.material</uri>
             </script>
           </material>
@@ -264,7 +264,7 @@
         <kinematic>0</kinematic>
       </link>
       <joint name='pendulum_joint' type='revolute'>
-        <pose relative_to='arm'>0.075 0 0.0125 0 -0 0</pose>
+        <pose relative_to='arm'>0.075 0 0.0125 -3.14159 0 0</pose>
         <parent>arm</parent>
         <child>pendulum</child>
         <axis>
@@ -328,7 +328,7 @@
           </geometry>
           <material>
             <script>
-              <name>Gazebo/Silver</name>
+              <name>Gazebo/CustomBlue</name>
               <uri>file://media/materials/scripts/gazebo.material</uri>
             </script>
           </material>
@@ -348,30 +348,30 @@
       <pose>0 0 0 0 -0 0</pose>
     </model>
     <state world_name='default'>
-      <sim_time>46 998000000</sim_time>
-      <real_time>47 170216038</real_time>
-      <wall_time>1732416909 907511894</wall_time>
-      <iterations>46998</iterations>
+      <sim_time>47 412000000</sim_time>
+      <real_time>47 599232823</real_time>
+      <wall_time>1734443656 186883763</wall_time>
+      <iterations>47412</iterations>
       <model name='fura2a'>
-        <pose>-2e-06 1e-06 -1e-06 1.8e-05 6e-06 3.7e-05</pose>
+        <pose>-2e-06 -5e-06 -2e-06 2.2e-05 2e-05 2.3e-05</pose>
         <scale>1 1 1</scale>
         <link name='arm'>
-          <pose>-1e-06 -1e-06 0.144999 1.8e-05 6e-06 9.6e-05</pose>
-          <velocity>-0.000913 -0.004841 0.000103 0.033368 -0.006286 0.043385</velocity>
-          <acceleration>-1.98028 -10.1692 0.305186 -2.37398 0.004236 -0.598381</acceleration>
-          <wrench>-3.53798 -18.1684 0.545249 0 -0 0</wrench>
+          <pose>1e-06 -8e-06 0.144998 5e-06 2.9e-05 -0.670063</pose>
+          <velocity>0.00274 -0.00653 -0.002075 0.045034 0.018906 -0.009639</velocity>
+          <acceleration>3.05568 -10.5617 -2.5235 -0.129452 -0.623849 2.08825</acceleration>
+          <wrench>5.45931 -18.8696 -4.50851 0 -0 0</wrench>
         </link>
         <link name='base_link'>
-          <pose>-2e-06 1e-06 -1e-06 1.8e-05 6e-06 3.7e-05</pose>
-          <velocity>-0 -0 0.000102 0.033374 -0.00628 -0</velocity>
-          <acceleration>-0.682982 -3.62959 0.203955 -2.36667 0.006054 -0.001106</acceleration>
-          <wrench>-8.59048 -45.6526 2.56532 0 -0 0</wrench>
+          <pose>-2e-06 -5e-06 -2e-06 2.2e-05 2e-05 2.3e-05</pose>
+          <velocity>-0 -0 -0.002075 0.045014 0.018897 -1e-06</velocity>
+          <acceleration>0.992197 -3.72334 -2.07024 -0.643421 -0.602564 -0.000498</acceleration>
+          <wrench>12.4797 -46.8318 -26.0393 0 -0 0</wrench>
         </link>
         <link name='pendulum'>
-          <pose>0.074999 6e-06 0.157499 -1.56781 6e-06 9.6e-05</pose>
-          <velocity>-0.000996 -0.002026 0.000577 0.15067 -0.006231 0.043375</velocity>
-          <acceleration>-7.20386 -3.55014 -6.1946 -0.806007 -0.240827 -2.14649</acceleration>
-          <wrench>-0.64401 -0.317375 -0.553784 0 -0 0</wrench>
+          <pose>0.058785 -0.046586 0.157496 3.14153 2.9e-05 -0.670063</pose>
+          <velocity>0.002528 -0.007661 -0.005285 0.042359 0.021042 -0.009607</velocity>
+          <acceleration>3.58841 -4.40873 -6.61821 -0.936009 -0.320224 -0.150881</acceleration>
+          <wrench>0.320796 -0.394131 -0.591654 0 -0 0</wrench>
         </link>
       </model>
       <model name='ground_plane'>
@@ -390,7 +390,7 @@
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose>0.420994 -0.385424 0.261088 0 0.275643 2.35619</pose>
+        <pose>0.330652 -0.229926 0.240899 0 0.263643 2.5082</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>

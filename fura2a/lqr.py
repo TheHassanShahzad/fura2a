@@ -39,10 +39,10 @@ class JointStateProcessor(Node):
         # self.ip = 0.000358709 
         self.ia = 0.00283041
         self.ip = 0.000322832
-        self.kc = 0.2
+        self.kc = 0.1
 
         alpha = self.ip + self.mp * self.lp**2
-        beta = self.lp * self.mp * self.lp
+        beta = self.lp * self.mp
         delta = self.ia + self.mp * self.lp**2
 
         # Denominator for A and B matrices
@@ -75,14 +75,22 @@ class JointStateProcessor(Node):
 
         self.P = solve_discrete_are(self.Ad, self.Bd, self.Q, self.R)
         self.K = np.linalg.inv(self.R + self.Bd.T @ self.P @ self.Bd) @ (self.Bd.T @ self.P @ self.Ad)
-        
-        self.X = np.array([[0],[0],[0],[0]])
 
-        self.error_threshold = 0.08
+        print(self.K)
+        print(self.check_stable(self.Ad, self.Bd, self.K))
+        
+        self.X = self.X = np.zeros((4, 1), dtype=float)
+
+        self.error_threshold = 0.5
         self.effort_command = 0
+
+        self.u_max = 1
+        self.data_array = []
+        self.count = 0
         
     def discretize(self, Ac, Bc, Cc, Dc, Ts):
-        return cont2discrete((Ac, Bc, np.eye(Ac.shape[0]), 0), Ts)
+        # return cont2discrete((Ac, Bc, np.eye(Ac.shape[0]), 0), Ts)
+        return cont2discrete((Ac, Bc, Cc, Dc), Ts)
     
     def swing_up(self, mp, lp, theta, theta_dot, g, kc):
         E = ((mp*(lp**2)*(theta_dot**2))/2) - (mp*g*lp*(cos(theta)))
@@ -91,10 +99,18 @@ class JointStateProcessor(Node):
         u = kc*d_E*theta_dot*cos(theta)
         return u
     
-    def lqr(self, K, x):
-        u = -K*x
-        return u
+    def lqr(self, K, x, u_max):
+        reference_state = np.array([[0], [0], [pi], [0]])
+        u = -K @ (x - reference_state)
+        # u = np.clip(u, -u_max, u_max)
+        print(u.item())
+        return u.item()
     
+    def check_stable(self, Ad, Bd, K):
+        A_cl = Ad - Bd @ K
+        eigenvalues = np.linalg.eigvals(A_cl)
+        return eigenvalues
+
     def listener_callback(self, msg):
         # Extract positions and velocities
         try:
@@ -111,10 +127,45 @@ class JointStateProcessor(Node):
             self.X[1] = arm_velocity
             self.X[2] = pendulum_position
             self.X[3] = pendulum_velocity
+ 
+            # print(self.X)
 
             msg_to_publish = Float64MultiArray()
 
-            self.effort_command = self.swing_up(self.mp, self.lp, pendulum_position, pendulum_velocity, self.g, self.kc)
+            # self.get_logger().info(f'Pendulum position: {pendulum_position}')
+
+            nearest_down = round(pendulum_position/(2*pi))*2*pi
+            nearest_up = (round((pendulum_position - pi) / (2 * pi)) * (2 * pi)) + pi
+
+            d_down = abs(pendulum_position - nearest_down)
+            d_up = abs(pendulum_position - nearest_up)
+            
+            if min(abs(pendulum_position - nearest_down), abs(pendulum_position - nearest_up)) <= self.error_threshold:
+
+            # if (abs(pendulum_position % pi) <= self.error_threshold):
+
+
+                if d_down < d_up:
+                    print("down position")
+                    self.effort_command = self.swing_up(self.mp, self.lp, pendulum_position, pendulum_velocity, self.g, self.kc)
+
+                    # self.data_array.append(-1)
+                else:
+                    print("up position")
+                    self.effort_command = self.lqr(self.K, self.X, self.u_max)
+
+
+                    # self.data_array.append(1)
+
+
+                # print("near equillibrium position")
+ 
+            else:
+                print("not near equillibrium points")
+                # self.data_array.append(0)
+                
+
+                self.effort_command = self.swing_up(self.mp, self.lp, pendulum_position, pendulum_velocity, self.g, self.kc)
 
             # error = abs(pendulum_position - pi)
             # print("error")
@@ -130,6 +181,11 @@ class JointStateProcessor(Node):
             # Publish the message
             self.publisher_.publish(msg_to_publish)
             # self.get_logger().info(f'Published value: {self.effort_command}')
+
+            # if self.count % 10 == 0:
+            #     print(self.data_array)
+
+            # self.count += 1
             
         except ValueError:
             # Handle the case where the joint name is not found

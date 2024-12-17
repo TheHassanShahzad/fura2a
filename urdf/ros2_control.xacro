@@ -1,6 +1,29 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
+    <!-- <ros2_control name="GazeboSystem" type="system">
+        <hardware>
+            <plugin>topic_based_ros2_control/TopicBasedSystem</plugin>
+            <param name="joint_commands_topic">/topic_based_joint_commands</param>
+            <param name="joint_states_topic">/topic_based_joint_states</param>
+            <param name="sum_wrapped_joint_states">false</param>
+            <param name="use_message_timestamp">true</param>
+        </hardware>
+        <joint name="arm_joint">
+            <command_interface name="effort"/>
+            
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+
+        <joint name="pendulum_joint">
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+
+    </ros2_control> -->
+
+
     <ros2_control name="GazeboSystem" type="system">
         <hardware>
             <plugin>gazebo_ros2_control/GazeboSystem</plugin>

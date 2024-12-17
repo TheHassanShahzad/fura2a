@@ -1,0 +1,9 @@
+digraph G {
+"column" -> "arm"[label=" Broadcaster: default_authority\nAverage rate: 333.533\nBuffer length: 5.007\nMost recent transform: 30.727\nOldest transform: 25.72\n"];
+"base_link" -> "column"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"arm" -> "pendulum"[label=" Broadcaster: default_authority\nAverage rate: 333.533\nBuffer length: 5.007\nMost recent transform: 30.727\nOldest transform: 25.72\n"];
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 1734405852.7404761"[ shape=plaintext ] ;
+}->"base_link";
+}
