@@ -50,42 +50,42 @@
 
 <link name="arm">
   <inertial>
-    <origin xyz="0.026682566071217124 -3.832567320079414e-17 0.014261674729385443" rpy="0 0 0"/>
-    <mass value="0.5334931362492104"/>
-    <inertia ixx="0.000381" iyy="0.000781" izz="0.001096" ixy="-0.0" iyz="-0.0" ixz="2.5e-05"/>
+    <origin xyz="0.037500000000000006 -2.220446049250313e-18 0.0062500000000000056" rpy="0 0 0"/>
+    <mass value="0.07359375"/>
+    <inertia ixx="2e-06" iyy="3.5e-05" izz="3.5e-05" ixy="-0.0" iyz="0.0" ixz="0.0"/>
   </inertial>
   <visual>
     <origin xyz="-0.0 -0.0 -0.145" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="file://$(find fura2a)/meshes/hollowed_arm.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="file://$(find fura2a)/meshes/fake_arm.stl" scale="0.001 0.001 0.001"/>
     </geometry>
-    <material name="silver"/>
+    <material name="Silver"/>
   </visual>
   <collision>
     <origin xyz="-0.0 -0.0 -0.145" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="file://$(find fura2a)/meshes/hollowed_arm.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="file://$(find fura2a)/meshes/fake_arm.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
 
 <link name="pendulum">
   <inertial>
-    <origin xyz="0.0049999999999999906 -7.34788079488412e-18 -0.05999999999999997" rpy="0 0 0"/>
-    <mass value="0.08939794594871456"/>
-    <inertia ixx="0.000157" iyy="0.000157" izz="1e-06" ixy="0.0" iyz="-0.0" ixz="0.0"/>
+    <origin xyz="0.0050000000000000044 -8.574075045622943e-18 -0.0675" rpy="0 0 0"/>
+    <mass value="0.10597499999999999"/>
+    <inertia ixx="0.000162" iyy="0.000162" izz="2e-06" ixy="0.0" iyz="-0.0" ixz="-0.0"/>
   </inertial>
   <visual>
-    <origin xyz="-0.075 -0.0 -0.1575" rpy="0 0 0"/>
+    <origin xyz="-0.075 0.0 -0.1575" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="file://$(find fura2a)/meshes/pendulum_down.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="file://$(find fura2a)/meshes/cuboid_pendulum.stl" scale="0.001 0.001 0.001"/>
     </geometry>
-    <material name="silver"/>
+    <material name="Silver"/>
   </visual>
   <collision>
-    <origin xyz="-0.075 -0.0 -0.1575" rpy="0 0 0"/>
+    <origin xyz="-0.075 0.0 -0.1575" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="file://$(find fura2a)/meshes/pendulum_down.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="file://$(find fura2a)/meshes/cuboid_pendulum.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
