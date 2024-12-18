@@ -8,30 +8,30 @@
 
 <gazebo reference="base_link">
   <material>${base_colour}</material>
-  <mu1>0.95</mu1>
-  <mu2>0.95</mu2>
+  <mu1>1</mu1>
+  <mu2>1</mu2>
   <self_collide>true</self_collide>
   <gravity>true</gravity>
 </gazebo>
 
 <gazebo reference="column">
   <material>${column_colour}</material>
-  <mu1>0.1</mu1>
-  <mu2>0.1</mu2>
+  <mu1>0.01</mu1>
+  <mu2>0.01</mu2>
   <self_collide>true</self_collide>
 </gazebo>
 
 <gazebo reference="arm">
   <material>${arm_colour}</material>
-  <mu1>0.1</mu1>
-  <mu2>0.1</mu2>
+  <mu1>0.01</mu1>
+  <mu2>0.01</mu2>
   <self_collide>true</self_collide>
 </gazebo>
 
 <gazebo reference="pendulum">
   <material>${pendulum_colour}</material>
-  <mu1>0.1</mu1>
-  <mu2>0.1</mu2>
+  <mu1>0.01</mu1>
+  <mu2>0.01</mu2>
   <self_collide>true</self_collide>
 </gazebo>
 

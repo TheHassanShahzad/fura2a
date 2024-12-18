@@ -50,46 +50,45 @@
 
 <link name="arm">
   <inertial>
-    <origin xyz="0.007967562168493848 3.0890324677637924e-17 0.012500000000000011" rpy="0 0 0"/>
-    <mass value="1.786614971490255"/>
-    <inertia ixx="0.001119" iyy="0.001785" izz="0.002717" ixy="-0.0" iyz="0.0" ixz="-0.0"/>
+    <origin xyz="0.026682566071217124 -3.832567320079414e-17 0.014261674729385443" rpy="0 0 0"/>
+    <mass value="0.5334931362492104"/>
+    <inertia ixx="0.000381" iyy="0.000781" izz="0.001096" ixy="-0.0" iyz="-0.0" ixz="2.5e-05"/>
   </inertial>
   <visual>
     <origin xyz="-0.0 -0.0 -0.145" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="file://$(find fura2a)/meshes/arm.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="file://$(find fura2a)/meshes/hollowed_arm.stl" scale="0.001 0.001 0.001"/>
     </geometry>
-    <material name="CustomGreen"/>
+    <material name="silver"/>
   </visual>
   <collision>
     <origin xyz="-0.0 -0.0 -0.145" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="file://$(find fura2a)/meshes/arm.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="file://$(find fura2a)/meshes/hollowed_arm.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
 
 <link name="pendulum">
   <inertial>
-    <origin xyz="0.005 1.2138781501420367e-17 0.06" rpy="0 0 0"/>
+    <origin xyz="0.0049999999999999906 -7.34788079488412e-18 -0.05999999999999997" rpy="0 0 0"/>
     <mass value="0.08939794594871456"/>
-    <inertia ixx="0.000157" iyy="0.000157" izz="1e-06" ixy="0.0" iyz="-0.0" ixz="-0.0"/>
+    <inertia ixx="0.000157" iyy="0.000157" izz="1e-06" ixy="0.0" iyz="-0.0" ixz="0.0"/>
   </inertial>
   <visual>
     <origin xyz="-0.075 -0.0 -0.1575" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="file://$(find fura2a)/meshes/pendulum.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="file://$(find fura2a)/meshes/pendulum_down.stl" scale="0.001 0.001 0.001"/>
     </geometry>
-    <material name="CustomBlue"/>
+    <material name="silver"/>
   </visual>
   <collision>
     <origin xyz="-0.075 -0.0 -0.1575" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="file://$(find fura2a)/meshes/pendulum.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="file://$(find fura2a)/meshes/pendulum_down.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
-
 
 <joint name="base_column_joint" type="fixed">
   <origin xyz="0.0 0.0 0.02" rpy="0 0 0"/>
@@ -102,13 +101,16 @@
   <parent link="column"/>
   <child link="arm"/>
   <axis xyz="0.0 0.0 1.0"/>
+  <dynamics damping="0.01" friction="0.0"/> <!-- Added damping -->
 </joint>
 
 <joint name="pendulum_joint" type="continuous">
-  <origin xyz="0.075 0.0 0.0125" rpy="-3.1415926 0 0"/>
+  <origin xyz="0.075 0.0 0.0125" rpy="0 0 0"/>
   <parent link="arm"/>
   <child link="pendulum"/>
   <axis xyz="1.0 0.0 0.0"/>
+  <dynamics damping="0.05" friction="0.0"/> <!-- Added damping -->
 </joint>
+
 
 </robot>
