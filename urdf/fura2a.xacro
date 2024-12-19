@@ -48,7 +48,7 @@
   </collision>
 </link>
 
-<link name="arm">
+<!-- <link name="arm">
   <inertial>
     <origin xyz="0.037500000000000006 -2.220446049250313e-18 0.0062500000000000056" rpy="0 0 0"/>
     <mass value="0.07359375"/>
@@ -67,8 +67,29 @@
       <mesh filename="file://$(find fura2a)/meshes/fake_arm.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
-</link>
+</link> -->
 
+
+<link name="arm">
+  <inertial>
+    <origin xyz="0.037500000000000006 -2.220446049250313e-18 0.0062500000000000056" rpy="0 0 0"/>
+    <mass value="0.3"/>
+    <inertia ixx="8.15286624e-06" iyy="1.42675159e-04" izz="1.42675159e-04" ixy="-0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.0 -0.0 -0.145" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find fura2a)/meshes/hollowed_arm.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="CustomGreen"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.0 -0.0 -0.145" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find fura2a)/meshes/fake_arm.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
 <link name="pendulum">
   <inertial>
     <origin xyz="0.0050000000000000044 -8.574075045622943e-18 -0.0675" rpy="0 0 0"/>
@@ -101,7 +122,7 @@
   <parent link="column"/>
   <child link="arm"/>
   <axis xyz="0.0 0.0 1.0"/>
-  <dynamics damping="0.0001"/> Added damping
+  <!-- <dynamics damping="0.0001"/> Added damping -->
 </joint>
 
 <joint name="pendulum_joint" type="continuous">
@@ -109,7 +130,7 @@
   <parent link="arm"/>
   <child link="pendulum"/>
   <axis xyz="1.0 0.0 0.0"/>
-  <dynamics damping="0.0003"/> Added damping
+  <!-- <dynamics damping="0.0003"/> Added damping -->
 
 </joint>
 

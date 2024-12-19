@@ -38,7 +38,8 @@ class JointStateProcessor(Node):
         self.L2 = 0.135
         self.b1 = 0.0001
         self.b2 = 0.0003
-        self.J1 = 0.000141365966796875
+        # self.J1 = 0.000141365966796875
+        self.J1 = 0.0005762689090000001
         self.J2 = 0.00064749796875
 
         self.J2_hat = self.J2 + self.m2 * self.l2 * self.l2
@@ -216,7 +217,8 @@ class JointStateProcessor(Node):
                     writer.writerow(self.data)
 
             print(self.count)
-            self.data.append(normalized_pendulum_position)
+            self.data.append(arm_position)
+            # self.data.append(normalized_pendulum_position)
             self.count += 1
 
         except ValueError:

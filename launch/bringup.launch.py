@@ -38,7 +38,7 @@ def generate_launch_description():
         launch_arguments={
             # 'world': world_file,
             'pause': 'false',
-            'gui': 'false',
+            'gui': 'true',
             'extra_gazebo_args': '--ros-args --params-file ' + gazebo_params_file
         }.items()
     )
