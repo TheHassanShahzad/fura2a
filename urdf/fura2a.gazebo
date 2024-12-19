@@ -11,7 +11,7 @@
   <mu1>1</mu1>
   <mu2>1</mu2>
   <self_collide>true</self_collide>
-  <gravity>true</gravity>
+  <gravity>false</gravity>
 </gazebo>
 
 <gazebo reference="column">
@@ -32,7 +32,7 @@
   <material>${pendulum_colour}</material>
   <mu1>0.01</mu1>
   <mu2>0.01</mu2>
-  <self_collide>true</self_collide>
+  <self_collide>false</self_collide>
 </gazebo>
 
 </robot>

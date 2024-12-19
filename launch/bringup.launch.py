@@ -16,7 +16,7 @@ def generate_launch_description():
     
     # File paths
     gazebo_params_file = os.path.join(this_dir, 'gazebo', 'gazebo_params.yaml')
-    world_file = os.path.join(this_dir, 'worlds', 'basic.world')
+    world_file = os.path.join(this_dir, 'worlds', 'empty.world')
     rviz_config_file = os.path.join(this_dir, 'rviz', 'display.rviz')
 
     rsp = IncludeLaunchDescription(
@@ -38,6 +38,7 @@ def generate_launch_description():
         launch_arguments={
             # 'world': world_file,
             'pause': 'false',
+            'gui': 'false',
             'extra_gazebo_args': '--ros-args --params-file ' + gazebo_params_file
         }.items()
     )

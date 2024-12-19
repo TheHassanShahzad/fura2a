@@ -9,7 +9,7 @@
 <link name="base_link">
   <inertial>
     <origin xyz="-1.4655194516233777e-17 0.0 0.009896382619700488" rpy="0 0 0"/>
-    <mass value="4.871674272906388"/>
+    <mass value="50"/>
     <inertia ixx="0.012198" iyy="0.012198" izz="0.024075" ixy="-0.0" iyz="0.0" ixz="0.0"/>
   </inertial>
   <visual>
@@ -30,7 +30,7 @@
 <link name="column">
   <inertial>
     <origin xyz="1.0658141036401502e-16 0.0 0.062495742145380256" rpy="0 0 0"/>
-    <mass value="7.706192602274715"/>
+    <mass value="50"/>
     <inertia ixx="0.014849" iyy="0.014849" izz="0.009632" ixy="0.0" iyz="0.0" ixz="0.0"/>
   </inertial>
   <visual>
@@ -57,9 +57,9 @@
   <visual>
     <origin xyz="-0.0 -0.0 -0.145" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="file://$(find fura2a)/meshes/fake_arm.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="file://$(find fura2a)/meshes/hollowed_arm.stl" scale="0.001 0.001 0.001"/>
     </geometry>
-    <material name="Silver"/>
+    <material name="CustomGreen"/>
   </visual>
   <collision>
     <origin xyz="-0.0 -0.0 -0.145" rpy="0 0 0"/>
@@ -76,11 +76,11 @@
     <inertia ixx="0.000162" iyy="0.000162" izz="2e-06" ixy="0.0" iyz="-0.0" ixz="-0.0"/>
   </inertial>
   <visual>
-    <origin xyz="-0.075 0.0 -0.1575" rpy="0 0 0"/>
+    <origin xyz="-0.075 -0.0 -0.1575" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="file://$(find fura2a)/meshes/cuboid_pendulum.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="file://$(find fura2a)/meshes/pendulum_down.stl" scale="0.001 0.001 0.001"/>
     </geometry>
-    <material name="Silver"/>
+    <material name="CustomBlue"/>
   </visual>
   <collision>
     <origin xyz="-0.075 0.0 -0.1575" rpy="0 0 0"/>
@@ -101,7 +101,7 @@
   <parent link="column"/>
   <child link="arm"/>
   <axis xyz="0.0 0.0 1.0"/>
-  <dynamics damping="0.01" friction="0.0"/> <!-- Added damping -->
+  <dynamics damping="0.0001"/> Added damping
 </joint>
 
 <joint name="pendulum_joint" type="continuous">
@@ -109,7 +109,8 @@
   <parent link="arm"/>
   <child link="pendulum"/>
   <axis xyz="1.0 0.0 0.0"/>
-  <dynamics damping="0.05" friction="0.0"/> <!-- Added damping -->
+  <dynamics damping="0.0003"/> Added damping
+
 </joint>
 
 

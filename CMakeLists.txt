@@ -46,11 +46,11 @@ install(DIRECTORY worlds
   DESTINATION share/${PROJECT_NAME}
 )
 
-install(PROGRAMS
-  fura2a/simple_publisher.py  # Add all Python scripts explicitly
-  fura2a/lqr.py
-  DESTINATION lib/${PROJECT_NAME}
-)
+# install(PROGRAMS
+#   fura2a/simple_publisher.py  # Add all Python scripts explicitly
+#   fura2a/lqr.py
+#   DESTINATION lib/${PROJECT_NAME}
+# )
 
 # Use ament_python to install the Python package
 ament_python_install_package(${PROJECT_NAME})

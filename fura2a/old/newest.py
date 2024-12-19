@@ -109,7 +109,7 @@ class JointStateProcessor(Node):
         d_E = E - E_desired
         u = self.kc * d_E * theta_dot * cos(theta)
         # print(u)
-        return u
+        return -u
 
     # def swing_up(self, theta, theta_dot):
     #     E = ((self.m2 * (self.l2**2) * (theta_dot**2)) / 2) - (self.m2 * self.g * self.l2 * (cos(theta)))
