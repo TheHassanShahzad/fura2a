@@ -107,6 +107,7 @@ class JointStateProcessor(Node):
         E = ((self.m2 * (self.l2**2) * (theta_dot**2)) / 2) - (self.m2 * self.g * self.l2 * (cos(theta)))
         E_desired = self.m2 * self.g * self.l2
         d_E = E - E_desired
+        print(d_E)
         u = self.kc * d_E * theta_dot * cos(theta)
         # print(u)
         return u

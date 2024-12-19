@@ -80,7 +80,7 @@ class JointStateProcessor(Node):
         
         self.X = self.X = np.zeros((4, 1), dtype=float)
 
-        self.error_threshold = 0.2
+        self.position_threshold = 0.7
         self.effort_command = 0
 
         self.u_max = 2
@@ -119,14 +119,21 @@ class JointStateProcessor(Node):
     def discretize(self, Ac, Bc, Ts):
         return cont2discrete((Ac, Bc, np.eye(Ac.shape[0]), 0), Ts)
     
-    def swing_up(self, mp, lp, theta, theta_dot, g, kc):
-        E = ((mp * (lp**2) * (theta_dot**2)) / 2) - (mp * g * lp * (cos(theta)))
-        E_desired = mp * g * lp
-        d_E = E - E_desired
-        print(d_E)
-        u = kc * d_E * theta_dot * cos(theta)
-        return u
+    # def swing_up(self, mp, lp, theta, theta_dot, g, kc):
+    #     E = ((mp * (lp**2) * (theta_dot**2)) / 2) - (mp * g * lp * (cos(theta)))
+    #     E_desired = mp * g * lp
+    #     d_E = E - E_desired
+    #     print(d_E)
+    #     u = kc * d_E * theta_dot * cos(theta)
+    #     return u
 
+    def swing_up(self, pendulum_position, pendulum_velocity):
+        E = ((self.m2 * (self.l2**2) * (pendulum_velocity**2)) / 2) - (self.m2 * self.g * self.l2 * (cos(pendulum_position)))
+        E_desired = self.m2 * self.g * self.l2
+        d_E = E - E_desired
+        # print(d_E)
+        u = self.kc * d_E * pendulum_velocity * cos(pendulum_position)
+        return u
 
     # def lqr(self, K, x, u_max=np.Inf):
     #     reference_state = np.array([[0], [pi], [0], [0]])
@@ -246,16 +253,22 @@ class JointStateProcessor(Node):
             #     print("swing-up active")
             #     self.effort_command = self.swing_up(self.m2, self.l2, pendulum_position, pendulum_velocity, self.g, self.kc)
 
-            if (pi - abs(pendulum_position)) <= self.error_threshold:
+            # if (pi - abs(pendulum_position)) <= self.error_threshold:
+            #     print("start lqr")
+            #     self.effort_command = self.lqr(self.K, self.X, self.u_max)
+            # elif (pi - abs(pendulum_position)) >= pi/2:
+            #     print("swing up")
+            #     self.effort_command = self.swing_up(self.m2, self.l2, pendulum_position, pendulum_velocity, self.g, self.kc)
+            # else:
+            #     print("do nothing")
+            #     self.effort_command = 0.0 
+
+            if pi - abs(pendulum_position) <= self.position_threshold:
                 print("start lqr")
-                self.effort_command = self.lqr(self.K, self.X, self.u_max)
-            elif (pi - abs(pendulum_position)) >= pi/2:
-                print("swing up")
-                self.effort_command = self.swing_up(self.m2, self.l2, pendulum_position, pendulum_velocity, self.g, self.kc)
+                # self.effort_command = self.lqr(self.K, self.X, self.u_max)
             else:
-                print("do nothing")
-                self.effort_command = 0.0 
-            # self.effort_command = self.swing_up(pendulum_position, pendulum_velocity)
+                print("no")
+            self.effort_command = self.swing_up(pendulum_position, pendulum_velocity)
             msg_to_publish.data = [self.effort_command]
             
             # Publish the message

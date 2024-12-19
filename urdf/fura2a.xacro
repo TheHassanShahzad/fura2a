@@ -48,7 +48,7 @@
   </collision>
 </link>
 
-<link name="arm">
+<!-- <link name="arm">
   <inertial>
     <origin xyz="0.007967562168493848 3.0890324677637924e-17 0.012500000000000011" rpy="0 0 0"/>
     <mass value="1.786614971490255"/>
@@ -65,6 +65,27 @@
     <origin xyz="-0.0 -0.0 -0.145" rpy="0 0 0"/>
     <geometry>
       <mesh filename="file://$(find fura2a)/meshes/arm.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link> -->
+
+<link name="arm">
+  <inertial>
+    <origin xyz="0.026682566071217124 -3.832567320079414e-17 0.014261674729385443" rpy="0 0 0"/>
+    <mass value="0.5334931362492104"/>
+    <inertia ixx="0.000381" iyy="0.000781" izz="0.001096" ixy="-0.0" iyz="-0.0" ixz="2.5e-05"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.0 -0.0 -0.145" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find fura2a)/meshes/hollowed_arm.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.0 -0.0 -0.145" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find fura2a)/meshes/hollowed_arm.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
