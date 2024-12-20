@@ -9,6 +9,7 @@ from std_msgs.msg import Float64MultiArray
 from math import pi, cos
 import numpy as np
 from control import dlqr, ss
+import matplotlib.pyplot as plt
 
 class JointStateProcessor(Node):
     def __init__(self):
@@ -47,7 +48,7 @@ class JointStateProcessor(Node):
         self.J2_hat = self.J2 + self.m2 * (self.l2**2)
         self.J0_hat = self.J1 + self.m1 * (self.l1**2) + self.m2 * (self.L1**2)
 
-        self.dt = 1/333
+        self.dt = 1/333.0
         
         # Weights for LQR
         self.theta1_weight = 0.0
@@ -78,6 +79,14 @@ class JointStateProcessor(Node):
         print("S is", self.S)
         print("E is", self.E)
 
+        # Data recording
+        self.num_samples = 3330  # 10s * 333Hz
+        self.count = 0
+        self.pendulum_positions = []
+        self.pendulum_velocities = []
+        self.control_inputs = []
+        self.times = []
+
     def normalize_angle(self, angle):
         """
         Normalize angle to [-pi, pi].
@@ -97,22 +106,17 @@ class JointStateProcessor(Node):
 
     def get_ABQR_inverted(self):
         # Linearization about theta = pi.
-        # At the top, cos(pi) = -1. Gravity terms change sign.
-        
+        # At the top, cos(pi) = -1.
         denominator = self.J0_hat * self.J2_hat - (self.m2**2) * (self.L1**2) * (self.l2**2)
         
-        # Gravity-related terms switch sign compared to downward equilibrium.
-        # Previously (downward eq): A32 and A42 were positive w.r.t. gravity
-        # For inverted equilibrium, these become negative.
         A32 = -(self.g * (self.m2**2) * (self.l2**2) * self.L1) / denominator
         A42 = -(self.g * self.m2 * self.l2 * self.J0_hat) / denominator
 
         A33 = (-self.b1 * self.J2_hat) / denominator
-        A34 = ( self.b2 * self.m2 * self.l2 * self.L1) / denominator  # Sign remains the same (damping doesn't depend on eq)
+        A34 = ( self.b2 * self.m2 * self.l2 * self.L1) / denominator
         A43 = ( self.b1 * self.m2 * self.l2 * self.L1) / denominator
         A44 = (-self.b2 * self.J0_hat) / denominator
 
-        # Input matrix B
         B31 = ( self.J2_hat ) / denominator
         B41 = ( self.m2 * self.L1 * self.l2 ) / denominator
 
@@ -143,8 +147,6 @@ class JointStateProcessor(Node):
         return K, S, E
 
     def swing_up(self, pendulum_position, pendulum_velocity):
-        # Energy-based swing-up about downward position
-        # If desired, you can adjust this for top position but typically swing-up goes from bottom.
         E = ((self.m2 * (self.sl2**2) * (pendulum_velocity**2)) / 2.0) - (self.m2 * self.g * self.sl2 * cos(pendulum_position))
         E_desired = self.m2 * self.g * self.sl2
         d_E = E - E_desired
@@ -152,14 +154,17 @@ class JointStateProcessor(Node):
         return u
 
     def do_lqr(self, X):
-        # Reference state is zero in shifted coordinates: phi_ref = 0, tilde_theta_ref = 0, and no velocities.
         X_ref = np.zeros((4,1))
         u = -self.K @ (X - X_ref) 
         u *= -10.0  # Amplify control effort
-        print("LQR control effort is", u.item())
+        # print("LQR control effort is", u.item())
         return u.item()
 
     def listener_callback(self, msg):
+        if self.count >= self.num_samples:
+            # Already captured enough data, no more processing
+            return
+        
         try:
             arm_index = msg.name.index('arm_joint')
             pendulum_index = msg.name.index('pendulum_joint')
@@ -167,8 +172,7 @@ class JointStateProcessor(Node):
             arm_position = msg.position[arm_index]
             arm_velocity = msg.velocity[arm_index]
             
-            # Original pendulum angle: theta
-            # We want tilde_theta = theta - pi
+            # tilde_theta = theta - pi
             pendulum_position = msg.position[pendulum_index]
             tilde_theta = self.normalize_angle(pendulum_position - pi)
             pendulum_velocity = msg.velocity[pendulum_index]
@@ -181,27 +185,82 @@ class JointStateProcessor(Node):
 
             msg_to_publish = Float64MultiArray()
 
-            # Check if we are close enough to the top to switch to LQR
             if abs(tilde_theta) <= self.position_threshold and abs(pendulum_velocity) <= self.velocity_threshold:
-                print("Using LQR at the top")
                 self.effort_command = self.do_lqr(self.X)
             else:
-                # print("Swinging up")
-                # Use swing-up control when not near the top equilibrium
-                # Note: swing_up uses pendulum_position, not tilde_theta, as it tries to bring it around.
                 self.effort_command = self.swing_up(pendulum_position, pendulum_velocity)
             
             msg_to_publish.data = [self.effort_command]
             self.publisher_.publish(msg_to_publish)
 
+            # Record data
+            self.pendulum_positions.append(tilde_theta)
+            self.pendulum_velocities.append(pendulum_velocity)
+            self.control_inputs.append(self.effort_command)
+            self.times.append(self.count * self.dt)
+
+            self.count += 1
+
+            # Once we have collected all data, plot and shutdown
+            if self.count == self.num_samples:
+                self.plot_results()
+                # Stop the node after plotting
+                rclpy.shutdown()
+
         except ValueError:
             self.get_logger().warn('Joint name not found in JointState message')
+    
+    def plot_results(self):
+        time = np.array(self.times)
+        pos = np.array(self.pendulum_positions)
+        vel = np.array(self.pendulum_velocities)
+        ctrl = np.array(self.control_inputs)
+
+        # Plot pendulum position
+        plt.figure()
+        plt.plot(time, pos, 'r-', label='Pendulum Position (rad)')
+        plt.xlabel('Time (s)')
+        plt.ylabel('Pendulum Position (rad)')
+        plt.title('Pendulum Position vs Time')
+        plt.grid(True)
+        plt.legend()
+
+        # Plot pendulum velocity
+        plt.figure()
+        plt.plot(time, vel, 'b-', label='Pendulum Velocity (rad/s)')
+        plt.xlabel('Time (s)')
+        plt.ylabel('Pendulum Velocity (rad/s)')
+        plt.title('Pendulum Velocity vs Time')
+        plt.grid(True)
+        plt.legend()
+
+        # Plot control input
+        plt.figure()
+        plt.plot(time, ctrl, 'g-', label='Control Input (Nm)')
+        plt.xlabel('Time (s)')
+        plt.ylabel('Control Input (Nm)')
+        plt.title('Control Input vs Time')
+        plt.grid(True)
+        plt.legend()
+
+        # Plot all together
+        plt.figure()
+        plt.plot(time, pos, 'r-', label='Pos (rad)')
+        plt.plot(time, vel, 'b-', label='Vel (rad/s)')
+        plt.plot(time, ctrl, 'g-', label='Ctrl (Nm)')
+        plt.xlabel('Time (s)')
+        plt.title('Pendulum Position, Velocity, and Control Input')
+        plt.grid(True)
+        plt.legend()
+
+        plt.show()
 
 
 def main(args=None):
     rclpy.init(args=args)
     joint_state_processor = JointStateProcessor()
     rclpy.spin(joint_state_processor)
+    # Cleanup
     joint_state_processor.destroy_node()
     rclpy.shutdown()
 
