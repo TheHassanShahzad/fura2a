@@ -245,16 +245,18 @@ class JointStateProcessor(Node):
             #     print("swing-up active")
             #     self.effort_command = self.swing_up(self.m2, self.l2, pendulum_position, pendulum_velocity, self.g, self.kc)
 
-            if (pi - abs(pendulum_position)) <= self.error_threshold:
-                print("start lqr")
-                self.effort_command = self.lqr(self.K, self.X, self.u_max)
-            elif (pi - abs(pendulum_position)) >= pi/2:
-                print("swing up")
-                self.effort_command = self.swing_up(self.m2, self.l2, pendulum_position, pendulum_velocity, self.g, self.kc)
-            else:
-                print("do nothing")
-                self.effort_command = 0.0 
+            # if (pi - abs(pendulum_position)) <= self.error_threshold:
+            #     print("start lqr")
+            #     self.effort_command = self.lqr(self.K, self.X, self.u_max)
+            # elif (pi - abs(pendulum_position)) >= pi/2:
+            #     print("swing up")
+            #     self.effort_command = self.swing_up(self.m2, self.l2, pendulum_position, pendulum_velocity, self.g, self.kc)
+            # else:
+            #     print("do nothing")
+            #     self.effort_command = 0.0 
             # self.effort_command = self.swing_up(pendulum_position, pendulum_velocity)
+            self.effort_command = self.swing_up(self.m2, self.l2, pendulum_position, pendulum_velocity, self.g, self.kc)
+
             msg_to_publish.data = [self.effort_command]
             
             # Publish the message
